@@ -1,6 +1,6 @@
 const token = localStorage.getItem('token');
 if (!token) {
-    window.location.href = 'index.html'; // Перенаправление на логин, если не авторизован
+    window.location.href = 'index.html'; // Redirect to login if not authenticated
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -18,9 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitBtn = document.getElementById('submitBtn');
     const taskList = document.getElementById('taskList');
 
-    let currentTaskId = null; // Отслеживание редактируемой задачи
+    let currentTaskId = null; // To track the task being edited
 
-    // Получение задач с сервера
+    // Fetch tasks from the backend
     async function fetchTasks() {
         try {
             const response = await fetch('http://localhost:8000/api/tasks', {
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
                 taskList.appendChild(li);
 
-                // Добавление обработчиков для редактирования и удаления
+                // Add event listeners for edit and delete buttons
                 const editButton = li.querySelector('.edit-btn');
                 const deleteButton = li.querySelector('.delete-btn');
                 
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Создание или обновление задачи
+    // Add a new task
     taskForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const title = taskTitle.value.trim();
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             let response;
             if (currentTaskId) {
-                // Обновление задачи
+                // Edit task
                 response = await fetch(`http://localhost:8000/api/tasks/${currentTaskId}`, {
                     method: 'PUT',
                     headers: {
@@ -78,10 +78,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     body: JSON.stringify({ title, description })
                 });
-                currentTaskId = null;
-                submitBtn.textContent = 'Add Task';
+                currentTaskId = null; // Reset edit mode after update
             } else {
-                // Создание новой задачи
+                // Add task
                 response = await fetch('http://localhost:8000/api/tasks', {
                     method: 'POST',
                     headers: {
@@ -104,11 +103,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Функция для редактирования задачи
+    // Edit task
     async function editTask(taskId) {
         try {
             const response = await fetch(`http://localhost:8000/api/tasks/${taskId}`, {
-                method: 'GET',
+                method: 'PUT',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             
@@ -121,6 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
             taskTitle.value = task.title;
             taskDescription.value = task.description;
 
+            // Change button text to "Update Task" and set edit mode
             submitBtn.textContent = 'Update Task';
             currentTaskId = taskId;
         } catch (error) {
@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Функция для удаления задачи
+    // Delete a task
     async function deleteTask(taskId) {
         try {
             const response = await fetch(`http://localhost:8000/api/tasks/${taskId}`, {
@@ -146,10 +146,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Загрузка задач при загрузке страницы
+    // Load tasks on page load
     fetchTasks();
 });
-
 function toggleMenu() {
     document.querySelector(".menu").classList.toggle("active");
 }
