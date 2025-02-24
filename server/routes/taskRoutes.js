@@ -4,6 +4,7 @@ const authenticateToken = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
+// Получить все задачи пользователя
 router.get('/', authenticateToken, async (req, res) => {
     try {
         const tasks = await Task.find({ user: req.user.id });
@@ -13,18 +14,38 @@ router.get('/', authenticateToken, async (req, res) => {
     }
 });
 
-router.post('/', authenticateToken, async (req, res) => {
-    const { title, description } = req.body;
-    const newTask = new Task({ user: req.user.id, title, description });
-    await newTask.save();
-    res.json(newTask);
+// Получить одну задачу по ID (необходим для редактирования)
+router.get('/:id', authenticateToken, async (req, res) => {
+    try {
+        const task = await Task.findById(req.params.id);
+        if (!task) return res.status(404).json({ error: 'Task not found' });
+        if (task.user.toString() !== req.user.id)
+            return res.status(403).json({ error: 'Unauthorized' });
+        res.json(task);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch task' });
+    }
 });
 
+// Создать новую задачу
+router.post('/', authenticateToken, async (req, res) => {
+    const { title, description } = req.body;
+    try {
+        const newTask = new Task({ user: req.user.id, title, description });
+        await newTask.save();
+        res.json(newTask);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to create task' });
+    }
+});
+
+// Обновить задачу
 router.put('/:id', authenticateToken, async (req, res) => {
     try {
         const task = await Task.findById(req.params.id);
         if (!task) return res.status(404).json({ error: 'Task not found' });
-        if (task.user.toString() !== req.user.id) return res.status(403).json({ error: 'Unauthorized' });
+        if (task.user.toString() !== req.user.id)
+            return res.status(403).json({ error: 'Unauthorized' });
 
         task.title = req.body.title || task.title;
         task.description = req.body.description || task.description;
@@ -37,18 +58,17 @@ router.put('/:id', authenticateToken, async (req, res) => {
     }
 });
 
+// Удалить задачу
 router.delete('/:id', authenticateToken, async (req, res) => {
     try {
         const task = await Task.findById(req.params.id);
         if (!task) {
             return res.status(404).json({ error: 'Task not found' });
         }
-
         if (task.user.toString() !== req.user.id) {
             return res.status(403).json({ error: 'Unauthorized' });
         }
-
-        await task.deleteOne(); // This is the new Mongoose method to delete a document
+        await task.deleteOne();
         res.json({ message: 'Task deleted' });
     } catch (error) {
         console.error('Error deleting task:', error);

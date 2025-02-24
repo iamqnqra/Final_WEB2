@@ -1,13 +1,13 @@
 const express = require('express');
-const User = require('../models/user'); // assuming you have a User model
-const authenticateToken = require('../middleware/authMiddleware'); // middleware to check if the user is authenticated
+const User = require('../models/user');
+const authenticateToken = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
-// Route to get user profile
+// Получить профиль пользователя
 router.get('/profile', authenticateToken, async (req, res) => {
     try {
-        const user = await User.findById(req.user.id).select('-password'); // Exclude password field
+        const user = await User.findById(req.user.id).select('-password');
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
@@ -17,17 +17,14 @@ router.get('/profile', authenticateToken, async (req, res) => {
     }
 });
 
-// Route to update user profile
+// Обновить профиль пользователя
 router.put('/profile', authenticateToken, async (req, res) => {
     try {
-        const { username, email } = req.body; // You can add more fields if needed
+        const { username, email } = req.body;
         const user = await User.findById(req.user.id);
-
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
-
-        // Update the user profile
         user.username = username || user.username;
         user.email = email || user.email;
 
