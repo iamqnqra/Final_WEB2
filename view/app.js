@@ -17,6 +17,7 @@ document.getElementById('toggleForm').addEventListener('click', function () {
     }
 });
 
+<<<<<<< HEAD
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -42,6 +43,8 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
 });
 
 
+=======
+>>>>>>> 0a64b68af60a68ea6e1c84aa5f0c449b0b7ebbfd
 document.getElementById('authForm').addEventListener('submit', async function (e) {
     e.preventDefault();
 

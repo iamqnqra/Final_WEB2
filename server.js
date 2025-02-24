@@ -14,6 +14,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+<<<<<<< HEAD
 
 // Раздаем статические файлы (CSS, JS, изображения)
 app.use(express.static(path.join(__dirname, 'public')));
@@ -24,6 +25,8 @@ app.get('/', (req, res) => {
 });
 
 
+=======
+>>>>>>> 0a64b68af60a68ea6e1c84aa5f0c449b0b7ebbfd
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/tasks', taskRoutes);
