@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Register</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="#" class="logo">Logo</a>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="menu">
+            <a href="/view/index.html">Log/register</a>
+            <a href="/view/dashboard.html">Task</a>
+            <a href="/view/profile.html">Profile</a>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="form-box">
+            <form id="authForm">
+                <h2 id="formTitle">Login</h2>
+                <div id="message"></div>
+                
+                <!-- Email Field (Visible for both Login and Register) -->
+                <label for="email">Email:</label>
+                <input type="email" id="email" required />
+                
+                <!-- Username Field (Visible Only for Registration) -->
+                <div id="usernameField" style="display: none;">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username"/>
+                </div>
+            
+                <!-- Password Field (Visible for both Login and Register) -->
+                <label for="password">Password:</label>
+                <input type="password" id="password" required />
+            
+                <button type="submit">Submit</button>
+            </form>            
+            
+            <p id="toggleForm">Don't have an account? <a href="#">Register</a></p>
+            <p id="message"></p>
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
