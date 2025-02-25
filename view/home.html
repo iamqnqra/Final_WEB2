@@ -1,91 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Your To-Do List</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f8ff; /* Light blue background */
+        * {
+            box-sizing: border-box;
             margin: 0;
-            padding: 20px;
-            color: #333;
+            padding: 0;
         }
-        header {
-            background: linear-gradient(90deg, #a0d8ef, #b2e0f8); /* Soft blue gradient */
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            position: relative;
         }
-        .container {
-            margin-top: 20px;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('/uploads/img1.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: brightness(0.3);
         }
-        h1 {
-            font-size: 28px;
+
+        .navbar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 220px;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 30px;
+            box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
+            z-index: 10;
         }
-        p {
+
+        .navbar .menu {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            align-items: center;
+        }
+
+        .navbar .menu a {
+            text-decoration: none;
+            color: #1e3c72;
             font-size: 18px;
-            line-height: 1.6;
+            font-weight: bold;
+            margin: 15px 0;
+            transition: color 0.3s, transform 0.2s;
+            padding: 10px;
+            width: 100%;
+            text-align: center;
+            border-radius: 6px;
         }
+
+        .navbar .menu a:hover {
+            color: #fff;
+            background: #2a5298;
+            transform: scale(1.05);
+        }
+
+        .main-content {
+            margin-left: 240px;
+            padding: 40px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            border: 3px solid #1e3c72;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: #1e3c72;
+            font-size: 18px;
+            margin: 15px 0;
+            padding: 10px;
+            text-align: center;
+            display: block;
+            border-radius: 6px;
+        }
+
+        .menu a:hover {
+            background: #2a5298;
+            color: white;
+        }
+
+        .container {
+            max-width: 750px;
+            padding: 30px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            min-width: 300px;
+            display: block;
+            height: 600px;
+        }
+
+        .container h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #1e3c72;
+        }
+
+        .container p {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            background: #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress {
+            height: 20px;
+            background: #2a5298;
+            width: 60%;
+            text-align: center;
+            color: white;
+            line-height: 20px;
+            border-radius: 10px;
+        }
+
+        .tips {
+            background: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #2a5298;
+            margin-top: 20px;
+            border-radius: 6px;
+        }
+
         .button {
             display: inline-block;
-            margin: 10px 5px;
-            padding: 15px 20px;
-            background: #b2e0f8; /* Light blue button */
-            color: #333;
-            text-decoration: none;
+            padding: 10px 20px;
+            margin: 10px;
+            background: #2a5298;
+            color: white;
             border-radius: 5px;
-            transition: background 0.3s, transform 0.3s;
-            font-size: 16px;
+            text-decoration: none;
+            transition: 0.3s;
         }
+
         .button:hover {
-            background: #90c8e5; /* Darker blue on hover */
-            transform: translateY(-2px);
-        }
-        .icon {
-            margin-right: 8px;
-        }
-        footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 14px;
-            color: #777;
+            background: #1e3c72;
         }
     </style>
 </head>
+
 <body>
     <nav class="navbar">
-        <div class="menu-toggle" onclick="toggleMenu()"></div>
+        <img src="/uploads/avatar.png" alt="User Avatar" class="avatar">
         <div class="menu">
-            <a href="/dashboard.html">Tasks</a>
-            <a href="/profile.html">Profile</a>
+            <a href="/dashboard.html"><i class="fas fa-tasks"></i> Tasks</a>
+            <a href="/profile.html"><i class="fas fa-user"></i> Profile</a>
         </div>
     </nav>
 
-<header>
-    <h1>Welcome to Your To-Do List!</h1>
-</header>
+    <div class="main-content">
+        <div class="container">
+            <h1>Welcome to Your To-Do List!</h1>
+            <p>Your personal task manager to keep you organized and productive.</p>
+            <p>Start managing your tasks efficiently today!</p>
 
-<div class="container">
-    <p>I am your assistant for organizing tasks. With this app, you can easily add, remove, and track your tasks.</p>
-    <p>Let's make your life more organized!</p>
-    
-    <a href="/dashboard.html" class="button"><i class="fas fa-plus icon"></i>Add Task</a>
-    <a href="/dashboard.html" class="button"><i class="fas fa-list icon"></i>View Tasks</a>
-    <a href="/profile.html" class="button"><i class="fas fa-cog icon"></i>Profile settings</a>
-</div>
+            <a href="/dashboard.html" class="button"><i class="fas fa-plus icon"></i>Add Task</a>
+            <a href="/dashboard.html" class="button"><i class="fas fa-list icon"></i>View Tasks</a>
+            <a href="/profile.html" class="button"><i class="fas fa-cog icon"></i>Profile Settings</a>
 
-<footer>
-    <p>&copy; 2025 Your To-Do List. All rights reserved.</p>
-</footer>
+            <h3>Task Progress</h3>
+            <div class="progress-bar">
+                <div class="progress" id="progress" style="width: 60%;">60%</div>
+            </div>
 
+            <h3>Statistics</h3>
+            <p>Tasks completed today: <strong id="tasks-today">5</strong></p>
+            <p>Tasks completed this week: <strong id="tasks-week">20</strong></p>
+
+            <div class="tips">
+                <h4>Productivity Tip</h4>
+                <p id="productivity-tip">Break your tasks into smaller chunks and set achievable goals to stay
+                    motivated.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let progress = document.getElementById("progress");
+            let tasksToday = document.getElementById("tasks-today");
+            let tasksWeek = document.getElementById("tasks-week");
+            let productivityTip = document.getElementById("productivity-tip");
+
+            let completedTasks = 5;
+            let totalTasks = 10;
+            let progressPercentage = (completedTasks / totalTasks) * 100;
+            progress.style.width = progressPercentage + "%";
+            progress.textContent = Math.round(progressPercentage) + "%";
+
+            let tips = [
+                "Break your tasks into smaller chunks.",
+                "Use the Pomodoro technique to stay focused.",
+                "Avoid multitasking and prioritize tasks.",
+                "Set daily goals and review progress.",
+                "Take short breaks to improve concentration."
+            ];
+
+            productivityTip.textContent = tips[Math.floor(Math.random() * tips.length)];
+        });
+    </script>
 </body>
+
 </html>
