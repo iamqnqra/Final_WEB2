@@ -35,7 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (!response.ok) {
-                throw new Error('Failed to fetch tasks');
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to fetch tasks');
             }
 
             const tasks = await response.json();
@@ -59,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         } catch (error) {
             console.error('Error fetching tasks:', error);
+            alert(error.message);
         }
     }
 
@@ -102,7 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (!response.ok) {
-                throw new Error('Failed to save task');
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to save task');
             }
 
             taskTitle.value = '';
@@ -110,6 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
             fetchTasks();
         } catch (error) {
             console.error('Error saving task:', error);
+            alert(error.message);
         }
     });
 
@@ -135,6 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentTaskId = taskId;
         } catch (error) {
             console.error('Error fetching task:', error);
+            alert(error.message);
         }
     }
 
@@ -147,12 +152,15 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (!response.ok) {
-                throw new Error('Failed to delete task');
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to delete task');
             }
+    
 
             fetchTasks();
         } catch (error) {
             console.error('Error deleting task:', error);
+            alert(error.message);
         }
     }
 
