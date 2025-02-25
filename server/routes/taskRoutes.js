@@ -6,6 +6,17 @@ const router = express.Router();
 
 // Получить все задачи пользователя
 router.get('/', authenticateToken, async (req, res) => {
+    const { importance, sortBy } = req.query;
+    let filter = { user: req.user.id };
+    if (importance) {
+      filter.importance = importance;
+    }
+    let sortOption = {};
+    if (sortBy === "dueDate") {
+      sortOption.dueDate = 1;
+    } else if (sortBy === "createdAt") {
+      sortOption.createdAt = -1;
+    }
     try {
         const tasks = await Task.find({ user: req.user.id });
         res.json(tasks);
