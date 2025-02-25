@@ -1,0 +1,185 @@
+/* Общие стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* --- Фон: синий градиент с наложением --- */
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    /* Градиент от темно-синего к светло-синему */
+    position: relative;
+}
+
+/* Полупрозрачный белый фон для затемнения */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/uploads/img1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(0.3);
+    z-index: -2;
+}
+
+/* Дополнительный синий фильтр */
+body::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(30, 60, 114, 0.8);
+    /* Темно-синий полупрозрачный слой */
+    z-index: -1;
+}
+
+/* --- Навигационная панель (левая) --- */
+.navbar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 200px;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.9);
+    /* Белая полупрозрачность */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .menu {
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar .menu a {
+    text-decoration: none;
+    color: #1e3c72;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 15px 0;
+    transition: 0.3s;
+}
+
+.navbar .menu a:hover {
+    color: #2a5298;
+    /* Светло-синий */
+}
+
+/* --- Контейнер с формой --- */
+.auth-container {
+    background: white;
+    width: 1100px;
+    height: 600px;
+    display: flex;
+    align-items: center;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    margin-left: 220px;
+}
+
+/* --- Левая часть (картинка) --- */
+.auth-container .left {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-container .left img {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Правая часть (форма) --- */
+.auth-container .right {
+    flex: 1;
+    padding: 20px;
+}
+
+.auth-container h2 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #1e3c72;
+    /* Темно-синий */
+}
+
+.auth-container form {
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+}
+
+.auth-container form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #2a5298;
+    /* Светло-синий */
+    border-radius: 8px;
+    font-size: 18px;
+}
+
+.auth-container form input:focus {
+    outline: none;
+    border-color: #1e3c72;
+    box-shadow: 0 0 5px rgba(30, 60, 114, 0.5);
+}
+
+/* --- Синяя кнопка --- */
+.auth-container button {
+    background: #1e3c72;
+    /* Темно-синий */
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.auth-container button:hover {
+    background: #2a5298;
+    /* Светло-синий */
+}
+
+/* --- Ссылки (логин) --- */
+.auth-container p {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.auth-container p a {
+    color: #1e3c72;
+    /* Темно-синий */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.auth-container p a:hover {
+    text-decoration: underline;
+    color: #2a5298;
+}
