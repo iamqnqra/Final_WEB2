@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 message.innerText = data.message || 'Success!';
                 if (formTitle === 'Login') {
                     localStorage.setItem('token', data.token);
-                    window.location.href = "dashboard.html";
+                    window.location.href = "home.html";
                 }
             } else {
                 throw new Error(data.error || 'Something went wrong!');
