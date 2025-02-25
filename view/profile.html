@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
-    <link rel="stylesheet" href="/public/style.css">
+    <link rel="stylesheet" href="/public/profile.css">
 </head>
+
 <body>
     <nav class="navbar">
         <div class="menu-toggle" onclick="toggleMenu()"></div>
@@ -23,8 +25,8 @@
             <label for="avatarInput" class="upload-label">Choose an image:</label>
             <input type="file" name="avatar" id="avatarInput" required>
             <button type="submit" class="upload-button">Upload an image</button>
-        </form>        
-        <p><strong>Avatar:</strong> 
+        </form>
+        <p><strong>Avatar:</strong>
             <img id="avatar" src="" alt="Avatar" style="max-width:150px; display: none;">
         </p>
         <p><strong>Username:</strong> <span id="username"></span></p>
@@ -70,8 +72,8 @@
             }
         }
 
-        document.getElementById('uploadAvatarForm').addEventListener('submit', async function(event) {
-            event.preventDefault(); 
+        document.getElementById('uploadAvatarForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
 
             const fileInput = document.getElementById('avatarInput');
             if (!fileInput.files.length) {
@@ -91,14 +93,14 @@
                     body: formData
                 });
 
-                const responseText = await response.text(); 
+                const responseText = await response.text();
                 console.log('Server response:', responseText);
 
                 try {
                     const data = JSON.parse(responseText);
                     if (!response.ok) throw new Error(data.error || 'Upload failed');
                     alert('Avatar uploaded successfully!');
-                    fetchProfile(); 
+                    fetchProfile();
                 } catch (error) {
                     console.error('Error parsing JSON:', error, 'Server response:', responseText);
                     alert('Failed to upload avatar');
@@ -112,4 +114,5 @@
         fetchProfile();
     </script>
 </body>
+
 </html>
