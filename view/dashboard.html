@@ -16,14 +16,50 @@
     </nav>
     <h1>Task Dashboard</h1>
 
+    <!-- Task Form -->
     <form id="taskForm">
         <input type="text" id="taskTitle" placeholder="Enter task title" required>
         <input type="text" id="taskDescription" placeholder="Enter task description" required>
+
+        <!-- Due date input -->
+        <input type="datetime-local" id="dueDate" required>
+
+        <!-- Importance dropdown -->
+        <select id="importance" required>
+            <option value="">Select importance</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+        </select>
+        
         <button type="submit" id="submitBtn">Add Task</button>
     </form>
 
-    <ul id="taskList"></ul>
+    <!-- Sorting Controls -->
+    <label for="sortBy">Sort By:</label>
+    <select id="sortBy">
+        <option value="dueDate">Due Date</option>
+        <option value="createdAt">Created Date</option>
+        <option value="importance">Importance</option>
+    </select>
+    
+    <label for="order">Order:</label>
+    <select id="order">
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+    </select>
+    
+    <label for="importanceFilter">Filter by Importance:</label>
+    <select id="importanceFilter">
+        <option value="">All</option>
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+    </select>
+    
 
+    <!-- Task List -->
+    <ul id="taskList"></ul>
     <script src="dashboard.js"></script>
 </body>
 </html>

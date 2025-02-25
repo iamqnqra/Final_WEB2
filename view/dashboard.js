@@ -17,13 +17,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const taskDescription = document.getElementById('taskDescription');
     const submitBtn = document.getElementById('submitBtn');
     const taskList = document.getElementById('taskList');
+    const sortBy = document.getElementById('sortBy');
+    const order = document.getElementById('order');
+    const importanceFilter = document.getElementById('importanceFilter');
 
     let currentTaskId = null; // To track the task being edited
 
-    // Fetch tasks from the backend
+    // Fetch tasks from the backend with sorting and filtering
     async function fetchTasks() {
+        const importance = importanceFilter.value;
+        const sortByValue = sortBy.value;
+        const orderValue = order.value;
+
         try {
-            const response = await fetch('http://localhost:8000/api/tasks', {
+            const response = await fetch(`http://localhost:8000/api/tasks?importance=${importance}&sortBy=${sortByValue}&order=${orderValue}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
@@ -37,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tasks.forEach(task => {
                 const li = document.createElement('li');
                 li.innerHTML = `
-                    ${task.title} - ${task.description}
+                    ${task.title} - ${task.description} - ${task.dueDate} - ${task.importance}
                     <button class="edit-btn">Edit</button>
                     <button class="delete-btn">Delete</button>
                 `;
@@ -66,6 +73,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        const dueDate = document.getElementById('dueDate').value;
+        const importance = document.getElementById('importance').value;
+
         try {
             let response;
             if (currentTaskId) {
@@ -76,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ title, description })
+                    body: JSON.stringify({ title, description, dueDate, importance })
                 });
                 currentTaskId = null; // Reset edit mode after update
             } else {
@@ -87,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ title, description })
+                    body: JSON.stringify({ title, description, dueDate, importance })
                 });
             }
 
@@ -107,10 +117,10 @@ document.addEventListener('DOMContentLoaded', () => {
     async function editTask(taskId) {
         try {
             const response = await fetch(`http://localhost:8000/api/tasks/${taskId}`, {
-                method: 'PUT',
+                method: 'GET',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
-            
+
             if (!response.ok) {
                 throw new Error('Failed to fetch task details');
             }
@@ -146,9 +156,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Event listener for sorting and filtering changes
+    sortBy.addEventListener('change', fetchTasks);
+    order.addEventListener('change', fetchTasks);
+    importanceFilter.addEventListener('change', fetchTasks);
+
     // Load tasks on page load
     fetchTasks();
 });
-function toggleMenu() {
-    document.querySelector(".menu").classList.toggle("active");
-}

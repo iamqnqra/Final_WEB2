@@ -6,24 +6,38 @@ const router = express.Router();
 
 // Получить все задачи пользователя
 router.get('/', authenticateToken, async (req, res) => {
-    const { importance, sortBy } = req.query;
+    const { importance, sortBy, order } = req.query;
+
     let filter = { user: req.user.id };
+
+    // Filter by importance if provided
     if (importance) {
-      filter.importance = importance;
+        filter.importance = importance;
     }
+
     let sortOption = {};
-    if (sortBy === "dueDate") {
-      sortOption.dueDate = 1;
-    } else if (sortBy === "createdAt") {
-      sortOption.createdAt = -1;
+    if (sortBy) {
+        // Determine the sort order (ascending or descending)
+        const sortOrder = order === 'desc' ? -1 : 1;
+
+        if (sortBy === "dueDate") {
+            sortOption.dueDate = sortOrder;
+        } else if (sortBy === "createdAt") {
+            sortOption.createdAt = sortOrder;
+        } else if (sortBy === "importance") {
+            sortOption.importance = sortOrder;
+        }
     }
+
     try {
-        const tasks = await Task.find({ user: req.user.id });
+        // Fetch tasks with filters and sorting options
+        const tasks = await Task.find(filter).sort(sortOption);
         res.json(tasks);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch tasks' });
     }
 });
+
 
 // Получить одну задачу по ID (необходим для редактирования)
 router.get('/:id', authenticateToken, async (req, res) => {
@@ -40,15 +54,29 @@ router.get('/:id', authenticateToken, async (req, res) => {
 
 // Создать новую задачу
 router.post('/', authenticateToken, async (req, res) => {
-    const { title, description } = req.body;
+    const { title, description, dueDate, importance } = req.body;
+
+    // Validate required fields
+    if (!dueDate || !importance) {
+        return res.status(400).json({ error: 'Due date and importance are required' });
+    }
+
     try {
-        const newTask = new Task({ user: req.user.id, title, description });
+        const newTask = new Task({
+            user: req.user.id,
+            title,
+            description,
+            dueDate,
+            importance
+        });
+
         await newTask.save();
         res.json(newTask);
     } catch (error) {
         res.status(500).json({ error: 'Failed to create task' });
     }
 });
+
 
 // Обновить задачу
 router.put('/:id', authenticateToken, async (req, res) => {
