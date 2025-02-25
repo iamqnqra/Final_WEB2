@@ -19,35 +19,98 @@
     </nav>
     <h1>Your Profile</h1>
     <div id="profileData"></div>
-    <button id="logout">Logout</button>
+    <div class="profile-container">
+        <form id="uploadAvatarForm" enctype="multipart/form-data">
+            <label for="avatarInput" class="upload-label">Choose an image:</label>
+            <input type="file" name="avatar" id="avatarInput" required>
+            <button type="submit" class="upload-button">Upload an image</button>
+        </form>        
+        <p><strong>Avatar:</strong> 
+            <img id="avatar" src="" alt="Avatar" style="max-width:150px; display: none;">
+        </p>
+        <p><strong>Username:</strong> <span id="username"></span></p>
+        <p><strong>Age:</strong> <span id="age">Not set</span></p>
+        <p><strong>Gender:</strong> <span id="gender">Not set</span></p>
+
+        <a href="/api/users/edit-profile">
+            <button class="upload-but">Edit Profile</button>
+        </a>
+        <button id="logout">Logout</button>
+    </div>
+
     <script>
         const token = localStorage.getItem('token');
         if (!token) {
             window.location.href = 'index.html';
         }
+
         document.getElementById('logout').addEventListener('click', () => {
             localStorage.removeItem('token');
             window.location.href = 'index.html';
         });
+
         async function fetchProfile() {
             try {
                 const response = await fetch('http://localhost:8000/api/users/profile', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
+
                 if (!response.ok) throw new Error('Failed to fetch profile');
+
                 const profile = await response.json();
-                document.getElementById('profileData').innerHTML = `
-                    <p>Username: ${profile.username}</p>
-                    <p>Email: ${profile.email}</p>
-                `;
+                document.getElementById('username').textContent = profile.username;
+                document.getElementById('age').textContent = profile.age || 'Not set';
+                document.getElementById('gender').textContent = profile.gender || 'Not set';
+
+                if (profile.avatar) {
+                    document.getElementById('avatar').src = `http://localhost:8000${profile.avatar}?t=${Date.now()}`;
+                    document.getElementById('avatar').style.display = 'block';
+                }
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Error fetching profile:', error);
             }
         }
+
+        document.getElementById('uploadAvatarForm').addEventListener('submit', async function(event) {
+            event.preventDefault(); 
+
+            const fileInput = document.getElementById('avatarInput');
+            if (!fileInput.files.length) {
+                alert('Please select an image!');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('avatar', fileInput.files[0]);
+
+            try {
+                const response = await fetch('http://localhost:8000/api/users/upload-avatar', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+
+                const responseText = await response.text(); 
+                console.log('Server response:', responseText);
+
+                try {
+                    const data = JSON.parse(responseText);
+                    if (!response.ok) throw new Error(data.error || 'Upload failed');
+                    alert('Avatar uploaded successfully!');
+                    fetchProfile(); 
+                } catch (error) {
+                    console.error('Error parsing JSON:', error, 'Server response:', responseText);
+                    alert('Failed to upload avatar');
+                }
+            } catch (error) {
+                console.error('Error uploading avatar:', error);
+                alert('Failed to upload avatar');
+            }
+        });
+
         fetchProfile();
-        function toggleMenu() {
-            document.querySelector(".menu").classList.toggle("active");
-        }
     </script>
 </body>
 </html>
