@@ -34,7 +34,7 @@ router.get('/', authenticateToken, async (req, res) => {
         const tasks = await Task.find(filter).sort(sortOption);
         res.json(tasks);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch tasks' });
+        next(new ApiError(500, 'Failed to fetch tasks'));
     }
 });
 
@@ -48,7 +48,7 @@ router.get('/:id', authenticateToken, async (req, res) => {
             return res.status(403).json({ error: 'Unauthorized' });
         res.json(task);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch task' });
+        next(new ApiError(500, 'Failed to fetch tasks'));
     }
 });
 
@@ -73,7 +73,7 @@ router.post('/', authenticateToken, async (req, res) => {
         await newTask.save();
         res.json(newTask);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to create task' });
+        next(new ApiError(500, 'Failed to create task'));
     }
 });
 
@@ -93,7 +93,7 @@ router.put('/:id', authenticateToken, async (req, res) => {
         await task.save();
         res.json(task);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to update task' });
+        next(new ApiError(500, 'Failed to update task'));
     }
 });
 
@@ -111,7 +111,7 @@ router.delete('/:id', authenticateToken, async (req, res) => {
         res.json({ message: 'Task deleted' });
     } catch (error) {
         console.error('Error deleting task:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        next(new ApiError(500, 'Failed to delete task'));
     }
 });
 
