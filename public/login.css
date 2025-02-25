@@ -3,7 +3,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
 }
 
 /* --- Фон: синий градиент с наложением --- */
@@ -13,7 +12,6 @@ body {
     justify-content: center;
     min-height: 100vh;
     background: linear-gradient(135deg, #1e3c72, #2a5298);
-    /* Градиент от темно-синего к светло-синему */
     position: relative;
 }
 
@@ -30,7 +28,6 @@ body::before {
     background-position: center;
     background-repeat: no-repeat;
     filter: brightness(0.3);
-    z-index: -2;
 }
 
 /* Дополнительный синий фильтр */
@@ -46,39 +43,45 @@ body::after {
     z-index: -1;
 }
 
-/* --- Навигационная панель (левая) --- */
 .navbar {
     position: fixed;
     left: 0;
     top: 0;
-    width: 200px;
+    width: 220px;
     height: 100vh;
-    background: rgba(255, 255, 255, 0.9);
-    /* Белая полупрозрачность */
+    background: rgba(255, 255, 255, 0.95);
+    /* Улучшенная белая полупрозрачность */
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 20px;
-    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+    padding-top: 30px;
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
 }
 
 .navbar .menu {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    align-items: center;
 }
 
 .navbar .menu a {
     text-decoration: none;
     color: #1e3c72;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     margin: 15px 0;
-    transition: 0.3s;
+    transition: color 0.3s, transform 0.2s;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    border-radius: 6px;
 }
 
 .navbar .menu a:hover {
-    color: #2a5298;
-    /* Светло-синий */
+    color: #fff;
+    background: #2a5298;
+    transform: scale(1.05);
 }
 
 /* --- Контейнер с формой (логин) --- */
