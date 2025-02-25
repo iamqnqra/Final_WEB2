@@ -4,20 +4,17 @@ const authenticateToken = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
-// Получить все задачи пользователя
 router.get('/', authenticateToken, async (req, res) => {
     const { importance, sortBy, order } = req.query;
 
     let filter = { user: req.user.id };
 
-    // Filter by importance if provided
     if (importance) {
         filter.importance = importance;
     }
 
     let sortOption = {};
     if (sortBy) {
-        // Determine the sort order (ascending or descending)
         const sortOrder = order === 'desc' ? -1 : 1;
 
         if (sortBy === "dueDate") {
@@ -39,7 +36,6 @@ router.get('/', authenticateToken, async (req, res) => {
 });
 
 
-// Получить одну задачу по ID (необходим для редактирования)
 router.get('/:id', authenticateToken, async (req, res) => {
     try {
         const task = await Task.findById(req.params.id);
@@ -52,11 +48,9 @@ router.get('/:id', authenticateToken, async (req, res) => {
     }
 });
 
-// Создать новую задачу
 router.post('/', authenticateToken, async (req, res) => {
     const { title, description, dueDate, importance } = req.body;
 
-    // Validate required fields
     if (!dueDate || !importance) {
         return res.status(400).json({ error: 'Due date and importance are required' });
     }
@@ -78,7 +72,6 @@ router.post('/', authenticateToken, async (req, res) => {
 });
 
 
-// Обновить задачу
 router.put('/:id', authenticateToken, async (req, res) => {
     try {
         const task = await Task.findById(req.params.id);
@@ -97,7 +90,6 @@ router.put('/:id', authenticateToken, async (req, res) => {
     }
 });
 
-// Удалить задачу
 router.delete('/:id', authenticateToken, async (req, res) => {
     try {
         const task = await Task.findById(req.params.id);

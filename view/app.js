@@ -1,12 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Переключение между формами
     document.getElementById('toggleRegister')?.addEventListener('click', (e) => {
         e.preventDefault();
         window.location.href = "/register.html";
     });
     
 
-    // Отправка формы для логина/регистрации
     document.getElementById('authForm').addEventListener('submit', async function (e) {
         e.preventDefault();
 
@@ -17,7 +15,6 @@ document.addEventListener('DOMContentLoaded', function () {
         let formTitle = document.getElementById('formTitle').innerText;
         let message = document.getElementById('message');
 
-        // Используем префикс /api/auth для согласования с сервером
         let endpoint = formTitle === 'Login' ? '/api/auth/login' : '/api/auth/register';
 
         let requestBody = formTitle === 'Login'

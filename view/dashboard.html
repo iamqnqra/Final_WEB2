@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Dashboard</title>
-    <link rel="stylesheet" href="/public/style.css">
+    <link rel="stylesheet" href="/public/dashboard.css">
 </head>
 <body>
     <nav class="navbar">
@@ -16,49 +16,46 @@
     </nav>
     <h1>Task Dashboard</h1>
 
-    <!-- Task Form -->
-    <form id="taskForm">
-        <input type="text" id="taskTitle" placeholder="Enter task title" required>
-        <input type="text" id="taskDescription" placeholder="Enter task description" required>
+    <div class="container add-task">
+        <h2>Add Task</h2>
+        <form id="taskForm">
+            <input type="text" id="taskTitle" placeholder="Enter task title" required>
+            <input type="text" id="taskDescription" placeholder="Enter task description" required>
+            <input type="datetime-local" id="dueDate" required>
+            <select id="importance" required>
+                <option value="">Select importance</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+            <button type="submit" id="submitBtn">Add Task</button>
+        </form>
+    </div>
 
-        <!-- Due date input -->
-        <input type="datetime-local" id="dueDate" required>
-
-        <!-- Importance dropdown -->
-        <select id="importance" required>
-            <option value="">Select importance</option>
+    <div class="container sorting-controls">
+        <h2>Sorting and Filtering</h2>
+        <label for="sortBy">Sort By:</label>
+        <select id="sortBy">
+            <option value="dueDate">Due Date</option>
+            <option value="createdAt">Created Date</option>
+            <option value="importance">Importance</option>
+        </select>
+        
+        <label for="order">Order:</label>
+        <select id="order">
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+        </select>
+        
+        <label for="importanceFilter">Filter by Importance:</label>
+        <select id="importanceFilter">
+            <option value="">All</option>
             <option value="low">Low</option>
             <option value="medium">Medium</option>
             <option value="high">High</option>
         </select>
-        
-        <button type="submit" id="submitBtn">Add Task</button>
-    </form>
+    </div>
 
-    <!-- Sorting Controls -->
-    <label for="sortBy">Sort By:</label>
-    <select id="sortBy">
-        <option value="dueDate">Due Date</option>
-        <option value="createdAt">Created Date</option>
-        <option value="importance">Importance</option>
-    </select>
-    
-    <label for="order">Order:</label>
-    <select id="order">
-        <option value="asc">Ascending</option>
-        <option value="desc">Descending</option>
-    </select>
-    
-    <label for="importanceFilter">Filter by Importance:</label>
-    <select id="importanceFilter">
-        <option value="">All</option>
-        <option value="low">Low</option>
-        <option value="medium">Medium</option>
-        <option value="high">High</option>
-    </select>
-    
-
-    <!-- Task List -->
     <ul id="taskList"></ul>
     <script src="dashboard.js"></script>
 </body>

@@ -1,71 +1,186 @@
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background-color: #333;
-    color: white;
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Times New Roman', Times, serif;
 }
 
-button {
-    padding: 0.5rem 1rem;
-    background-color: #007bff;
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    position: relative;
+    font-family: Arial, sans-serif;
+    padding-top: 60px;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/uploads/img1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(0.3);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.navbar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 220px;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 30px;
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.navbar .menu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+
+.navbar .menu a {
+    text-decoration: none;
+    color: #1e3c72;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 15px 0;
+    transition: color 0.3s, transform 0.2s;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    border-radius: 6px;
+}
+
+.navbar .menu a:hover {
+    color: #fff;
+    background: #2a5298;
+    transform: scale(1.05);
+}
+
+
+.container {
+    max-width: 690px;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    min-width: 300px;
+    margin-top: 20px;
+}
+
+h1 {
+    font-size: 2.5em;
+    color: white;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 2em;
+    color: #1e3c72;
+    margin-bottom: 15px;
+}
+.edit-btn, .delete-btn {
+    background-color: #2a5298; 
     color: white;
     border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
     cursor: pointer;
-    border-radius: 5px;
+    transition: background 0.3s, transform 0.2s;
 }
 
-#taskSection {
-    width: 50%;
-    margin: 2rem auto;
-    text-align: center;
+.edit-btn:hover, .delete-btn:hover {
+    background-color: #1e3c72; 
+    transform: scale(1.05);
 }
 
-input {
-    width: 70%;
+
+#taskForm input, #taskForm select, #taskForm button {
+    width: 100%;
     padding: 10px;
     margin: 10px 0;
+    border-radius: 6px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    font-size: 1em;
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    background: white;
-    padding: 10px;
-    margin: 5px 0;
-    display: flex;
-    justify-content: space-between;
-    border-radius: 5px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.delete-btn {
-    background-color: red;
-    padding: 5px;
-    border: none;
+#taskForm button {
+    background-color: #2a5298;
     color: white;
+    border: none;
     cursor: pointer;
-    border-radius: 5px;
+    transition: background 0.3s, transform 0.2s;
 }
-.navbar {
+
+#taskForm button:hover {
+    background-color: #1e3c72;
+    transform: scale(1.05);
+}
+
+
+#taskList {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+    width: 100%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#taskList li {
+    width: 500px;
+    background: #fff;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 6px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #333;
-    padding: 10px 20px;
 }
-.navbar a {
-    color: white;
-    text-decoration: none;
-    padding: 10px 15px;
-}
-.navbar a:hover {
-    background-color: #575757;
-    border-radius: 5px;
+
+
+@media (max-width: 768px) {
+    .navbar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        flex-direction: row;
+        justify-content: center;
+        padding: 10px 0;
+    }
+
+    .navbar .menu {
+        flex-direction: row;
+        gap: 15px;
+    }
+
+    .container {
+        width: 90%;
+        margin: 20px auto;
+        display: flex;
+        justify-content: center;
+    }
 }

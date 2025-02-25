@@ -16,9 +16,7 @@
 </nav>
   <div class="container">
     <h2>Edit Profile</h2>
-    <!-- Форма отправляется на маршрут POST /api/users/edit-profile -->
     <form action="/api/users/edit-profile" method="POST" id="editProfileForm">
-      <!-- Скрытое поле для передачи JWT-токена -->
       <input type="hidden" name="token" id="tokenInput">
       
       <label for="username">Username:</label>
@@ -42,7 +40,6 @@
   </div>
 
   <script>
-    // Устанавливаем значение скрытого поля token из localStorage
     document.getElementById('tokenInput').value = localStorage.getItem('token');
   </script>
 </body>
