@@ -1,35 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Переключение между формами
-    document.getElementById('toggleForm').addEventListener('click', function (e) {
+    document.getElementById('toggleRegister')?.addEventListener('click', (e) => {
         e.preventDefault();
-
-        let formTitle = document.getElementById('formTitle');
-        let toggleText = document.getElementById('toggleForm');
-        let usernameField = document.getElementById('usernameField');
-        let usernameInput = document.getElementById('username');
-
-        if (formTitle.innerText === 'Login') {
-            formTitle.innerText = 'Register';
-            toggleText.innerHTML = 'Already have an account? <a href="/login.html" id="toggleLogin">Login</a>';
-            usernameField.style.display = 'block';
-            usernameInput.setAttribute('required', '');
-        } else {
-            formTitle.innerText = 'Login';
-            toggleText.innerHTML = 'Don\'t have an account? <a href="/register.html" id="toggleRegister">Register</a>';
-            usernameField.style.display = 'none';
-            usernameInput.removeAttribute('required');
-        }
-
-        document.getElementById('toggleLogin')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.getElementById('toggleForm').click();
-        });
-
-        document.getElementById('toggleRegister')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.getElementById('toggleForm').click();
-        });
+        window.location.href = "/register.html";
     });
+    
 
     // Отправка формы для логина/регистрации
     document.getElementById('authForm').addEventListener('submit', async function (e) {
