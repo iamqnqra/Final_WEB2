@@ -108,5 +108,13 @@ app.use('/api/tasks', taskRoutes);
 
 connectDB();
 
+// Глобальный обработчик ошибок
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    // Если статус ошибки не установлен, отдаём 500
+    res.status(err.status || 500).json({ error: err.message || 'Internal Server Error' });
+});
+
+
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
