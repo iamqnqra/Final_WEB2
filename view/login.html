@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="/public/style.css">
+    <link rel="stylesheet" href="/public/login_reg.css">
 </head>
 <body>
     <nav class="navbar">
@@ -31,8 +31,12 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" placeholder="Enter password" required>
             </div>
+            <div class="remember-me">
+                <input type="checkbox" id="rememberMe">
+                <label for="rememberMe">Remember Me</label>
+            </div>
             <button type="submit">Submit</button>
-            <p id="toggleForm">Don't have an account? <a href="#" id="toggleRegister">Register</a></p>
+            <p id="toggleForm">Don't have an account? <a href="/register.html" id="toggleRegister">Register</a></p>
             <p id="message"></p>
         </form>
     </div>

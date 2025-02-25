@@ -10,12 +10,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (formTitle.innerText === 'Login') {
             formTitle.innerText = 'Register';
-            toggleText.innerHTML = 'Already have an account? <a href="#" id="toggleLogin">Login</a>';
+            toggleText.innerHTML = 'Already have an account? <a href="/login.html" id="toggleLogin">Login</a>';
             usernameField.style.display = 'block';
             usernameInput.setAttribute('required', '');
         } else {
             formTitle.innerText = 'Login';
-            toggleText.innerHTML = 'Don\'t have an account? <a href="#" id="toggleRegister">Register</a>';
+            toggleText.innerHTML = 'Don\'t have an account? <a href="/register.html" id="toggleRegister">Register</a>';
             usernameField.style.display = 'none';
             usernameInput.removeAttribute('required');
         }
