@@ -47,7 +47,7 @@ router.get('/edit-profile', (req, res) => {
     if (!req.session || !req.session.user) {
       return res.redirect('/edit-info.html');
     }
-    res.sendFile(path.join(__dirname, '../view', 'edit-info.html'));
+    res.sendFile(path.join(__dirname, '../../view', 'edit-info.html'));
 });
 
 
@@ -87,8 +87,9 @@ router.post('/edit-profile', async (req, res) => {
 
         const parsedAge = parseInt(age, 10);
         if (isNaN(parsedAge) || parsedAge < 1 || parsedAge > 120) {
-            return res.redirect('/api/users/edit-profile?error=Age+must+be+between+1+and+120');
+            return res.status(400).json({ error: 'Age must be between 1 and 120' });
         }
+        
 
         // Проверяем, существует ли другой пользователь с таким же username
         if (username && username !== user.username) {

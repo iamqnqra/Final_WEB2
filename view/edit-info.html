@@ -4,9 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Edit Profile</title>
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/public/edit.css">
 </head>
 <body>
+  <nav class="navbar">
+    <div class="menu-toggle" onclick="toggleMenu()"></div>
+    <div class="menu">
+      <a href="/home.html">Home</a>
+      <a href="/dashboard.html">Tasks</a>
+    </div>
+</nav>
   <div class="container">
     <h2>Edit Profile</h2>
     <!-- Форма отправляется на маршрут POST /api/users/edit-profile -->
